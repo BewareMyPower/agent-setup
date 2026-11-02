@@ -13,11 +13,26 @@ Unless the assignment explicitly identifies the current agent as the context-iso
 
 1. Spawn a fresh subagent with `fork_turns: "none"` so it does not inherit the parent conversation.
 2. Identify it explicitly as the context-isolated reviewer. Keep it read-only, tell it to read this skill, and instruct it not to delegate the review again. Require it to assess every equally weighted criterion and use the report format below.
-3. Pass only the original requirement or acceptance criteria, the repository path, and the review target such as the working tree, diff, branch, commit, or pull request. Do not pass the parent agent's reasoning, suspected defects, implementation rationale, or draft conclusions.
+3. Pass only the original requirement or acceptance criteria, the repository path, and the review target such as the working tree, diff, branch, commit, or pull request. Do not pass the parent agent's reasoning, suspected defects, implementation rationale, or draft conclusions. For a follow-up pass, also supply prior findings per "Re-review After Fixes" below.
 
 If the assignment identifies the current agent as the context-isolated reviewer, perform the review directly and do not spawn another subagent or edit files.
 
 After the reviewer returns, report only confirmed findings. For an implementation task, fix them, rerun relevant checks, and repeat the independent review until no findings remain or user direction is needed. For a review-only task, do not edit. If a context-isolated subagent is unavailable, state that the independent review was not completed and do not claim a full review.
+
+## Re-review After Fixes
+
+When the target is a follow-up pass after some earlier findings were addressed:
+
+1. Pass the prior findings to the context-isolated reviewer alongside the requirement and target, and ask it to verify each is resolved. Do not pass how the parent agent judged them or why they were raised.
+2. Give the reviewer both diffs it needs: the delta the fixes produced (e.g. working tree vs. the last reviewed commit, or the new commits since the prior pass) and the full review target (e.g. branch vs. base), so it can attribute each new finding to a changed region.
+3. Instruct the reviewer to still assess all six criteria across the whole target, not only the fixed regions.
+
+Report each remaining or new finding with an origin label, and name the prior finding or review suggestion that caused it:
+
+- **Introduced by the fix.** The defect sits in a change made to address prior comments, or the fix removed a mechanism the old code had. Attribute it precisely: if the regression traces to a suggestion the previous review made (as opposed to the author's own choice), say so and identify the finding that proposed it — the flaw is in the suggestion, not in how it was applied.
+- **Pre-existing (previously missed).** The defect was already present in the reviewed code before the fixes and was not reported earlier.
+
+Do not relist resolved prior findings; one summary line in the `### Review summary` noting which were confirmed resolved is enough. Keep the six criterion sections and report format unchanged otherwise.
 
 ## Review Criteria
 
