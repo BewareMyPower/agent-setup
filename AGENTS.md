@@ -34,6 +34,10 @@
 - Do not assert the absence of fields or behavior that never existed; negative assertions should guard a real, previously observed regression.
 - Do not add comments to test functions: the test name and its assertions are the documentation.
 
+## Communication
+
+- When an abbreviated technical term (e.g. BFF, CDC, IAM) first appears in a session, add a brief parenthetical expansion on first use — e.g. "BFF (backend for frontend)". Later uses need no explanation; only expand terms the user did not write themselves.
+
 ## Chinese
 
 The following words should be avoided in Chinese content, you should replace these words with more easy-to-understand words:
