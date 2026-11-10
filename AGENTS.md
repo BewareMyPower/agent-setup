@@ -4,9 +4,9 @@
 - Never force-push unless explicitly asked to rewrite the published history of the specific branch. If a normal push is rejected as non-fast-forward, report it instead of forcing.
 - Never merge a pull request or enable auto-merge unless explicitly asked to merge that specific pull request. Green CI, approval, or a request to continue is not merge authorization.
 - When commits are requested, keep each commit coherent and reviewable, exclude unrelated changes, and report the commit hash and validation performed.
-- Always ask before running `git push`, `git rebase` or a `gh` CLI operation
+- Always ask before running `git push`, `git rebase` or a state-changing `gh` CLI operation (e.g. `gh pr create`, `gh pr merge`, `gh issue close`). Read-only `gh` commands such as `gh pr view`, `gh pr diff`, `gh issue view`, and `gh api` GET requests may run without asking.
 - Never rewrite existing commits: no `git commit --amend`, no `git commit --fixup`, and no `git rebase -i`/`--autosquash` that would squash, drop, reorder, or reword commits; apply corrections as new commits instead. A plain `git rebase <base>` that replays the branch's commits unchanged onto a new base (e.g. restacking) is allowed under the ask-first rule above. History rewriting is only permitted when the user explicitly asks to reorganize that branch's commits.
-- Never read files that are not part of the current Git repository.
+- Never read files that are not part of the current Git repository unless they are explicitly requested by the user.
 - The user may edit code manually during a session; when a file's content changed externally, disregard prior snapshots and make changes against the latest code.
 
 ## Long-running work
@@ -40,5 +40,6 @@ The following words should be avoided in Chinese content, you should replace the
 - 锚点
 - 接线
 - 门禁
+- 谓词
 
 Besides, avoid figures of speech as much as possible. Using English for professional terms is acceptable.
