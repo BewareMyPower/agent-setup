@@ -17,7 +17,7 @@ Unless the assignment explicitly identifies the current agent as the context-iso
 
 If the assignment identifies the current agent as the context-isolated reviewer, perform the review directly and do not spawn another subagent or edit files.
 
-After the reviewer returns, report only confirmed findings. For an implementation task, fix them, rerun relevant checks, and repeat the independent review until no findings remain or user direction is needed. For a review-only task, do not edit. If a context-isolated subagent is unavailable, state that the independent review was not completed and do not claim a full review.
+After the reviewer returns, report only confirmed findings. For an implementation task, fix P1 and P2 findings, rerun relevant checks, and run another independent review while unresolved P1 or P2 findings remain. Once only P3 findings remain, stop the re-review loop and put those P3 findings to the user for a decision; do not fix or re-review P3 items unless the user explicitly asks. For a review-only task, do not edit. If a context-isolated subagent is unavailable, state that the independent review was not completed and do not claim a full review.
 
 ## Re-review After Fixes
 
@@ -26,6 +26,8 @@ When the target is a follow-up pass after some earlier findings were addressed:
 1. Pass the prior findings to the context-isolated reviewer alongside the requirement and target, and ask it to verify each is resolved. Do not pass how the parent agent judged them or why they were raised.
 2. Give the reviewer both diffs it needs: the delta the fixes produced (e.g. working tree vs. the last reviewed commit, or the new commits since the prior pass) and the full review target (e.g. branch vs. base), so it can attribute each new finding to a changed region.
 3. Instruct the reviewer to still assess all six criteria across the whole target, not only the fixed regions.
+
+Run a follow-up pass only while unresolved P1 or P2 findings remain. When only P3 findings remain, stop and report them as deferred suggestions awaiting the user's decision; a new P1 or P2 surfaced by a pass continues the loop, while new P3 findings join the deferred list.
 
 Report each remaining or new finding with an origin label, and name the prior finding or review suggestion that caused it:
 
