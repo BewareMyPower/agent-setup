@@ -39,6 +39,12 @@ Pi ships no subagent tool, so the `pi-subagents` package in `settings.json` prov
 
 Agent files are markdown with YAML frontmatter (`name`, `description`, `tools`, optional `model` and `thinking`) read from `~/.pi/agent/agents/**/*.md` in this setup, with project agents from `.pi/agents/**/*.md` behind project trust. `pi/agents/comment-sicko.md` is linked there by `setup.sh`; it is a Pi-format port of `.agents/agents/comment-sicko.md`, whose `mode: subagent` frontmatter belongs to another agent runtime, so the two files are kept in sync by hand.
 
+## Reading the transcript
+
+`Ctrl+T` collapses or expands thinking blocks and saves the choice as `hideThinkingBlock`, and `thinkingPeek.lines` in `open-tui.json` keeps the last one or two lines of live reasoning visible while hidden.
+
+`Ctrl+O` collapses tool *results* only, so a tool whose arguments are long, such as a `bash` command with an inline heredoc, still fills the screen while collapsed. `toolView.mode: "compact"` is what shortens the call itself into one summary row per tool, and `toolView.exclude` keeps the native card for named tools. Compact mode applies to rows created after `/reload` or a new session.
+
 ## Terminal icons
 
 Symptom: the footer shows boxed `?` marks where icons should be, next to the branch, runtime, context bar, token counts, cache rate, and cost.

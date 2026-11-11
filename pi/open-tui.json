@@ -24,5 +24,9 @@
     "tokens": true,
     "stalls": true,
     "cost": true
+  },
+  "toolView": {
+    "mode": "compact",
+    "extensionTools": true
   }
 }
