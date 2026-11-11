@@ -26,6 +26,8 @@ Repeat `pi auth login <provider>` for every provider you use; credentials are ne
 
 `setup.sh` writes `pi/settings.json` and `pi/open-tui.json` into the agent directory (`$PI_CODING_AGENT_DIR`, default `~/.pi/agent`) only when those files are missing, symlinks `AGENTS.md` as both `~/.pi/agent/AGENTS.md` and `~/.agents/AGENTS.md`, links `.agents/skills/*` and `.agents/agents` into `~/.agents`, and finishes with `pi update --extensions` to install the packages declared in `settings.json`. Pass `--force` to replace existing files; their previous contents are kept as `<file>.bak.<timestamp>`.
 
+Both `AGENTS.md` links matter: Pi reads user instructions only from the agent directory (`~/.pi/agent/AGENTS.md`) and from `AGENTS.md` in the working directory or one of its ancestors, while `~/.agents/AGENTS.md` is the location other agents such as the DeepSeek harness read. Deleting the agent-directory copy silently drops the global instructions from Pi.
+
 Instructions and skills stay authoritative here: edit them in this repository and every machine picks the change up through the symlink. The two `pi/*.json` files are copies, so after changing a setting through `/settings` or `/open-tui` on any machine, copy that file back here and commit it.
 
 Not committed on purpose: `auth.json` (API keys and OAuth tokens), `trust.json` and `trust/` (per-machine trust decisions keyed by absolute path), `sessions/`, `models-store.json` (regenerated model catalog cache), and the `npm/` and `git/` package installs.
