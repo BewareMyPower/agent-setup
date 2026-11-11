@@ -53,6 +53,8 @@ brew install --cask font-jetbrains-mono-nerd-font
 printf '\ue0a0 \ue5ff \uf015 \U000f0179\n'
 ```
 
+The installed files are named `JetBrainsMonoNF-Regular.ttf` and similar, while pickers list the family as `JetBrainsMono Nerd Font`, so a profile that reads back as `JetBrainsMonoNF-Regular 12` is already correct.
+
 or by dropping the glyphs entirely: set `"icons": { "mode": "unicode" }` in `~/.pi/agent/open-tui.json` (`ascii` for plain text), or cycle the value under Appearance → Icons in the `/open-tui` dialog. Unicode mode falls back to the terminal's emoji and symbol fonts and needs no patched font.
 
 If an icon renders but eats the gap after it, enable Footer → Other → Extra space after Nerd icons (`footerSegments.nerdIconSpacing`). In Kitty, `narrow_symbols U+E000-U+F8FF 1` in `kitty.conf` is an alternative.
