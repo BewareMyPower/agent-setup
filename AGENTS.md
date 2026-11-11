@@ -54,5 +54,6 @@ The following words should be avoided in Chinese content, you should replace the
 - 谓词
 - 张力
 - 夹
+- 回显
 
 Besides, avoid figures of speech as much as possible. Using English for professional terms is acceptable.
