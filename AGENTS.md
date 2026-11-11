@@ -1,3 +1,9 @@
+## Global config
+
+- This repository holds the authoritative global agent config, and each machine links to it instead of copying it: `AGENTS.md` is symlinked to `~/.pi/agent/AGENTS.md` and `~/.agents/AGENTS.md`, and `.agents/skills/*` and `.agents/agents` are symlinked into `~/.agents`, so edit them here and never at the linked paths.
+- `pi/settings.json` and `pi/open-tui.json` are copies rather than links: after changing a setting through `/settings` or `/open-tui`, copy that file back into `pi/` and commit it.
+- Run `./pi/setup.sh` on a new machine; it writes a missing file, otherwise keeps the existing one, and `--force` replaces it after saving `<file>.bak.<timestamp>`.
+
 ## Execution and Git
 
 - For long tasks, maintain the global plan and end goal. Report only material progress. Final handoffs should state the result, validation, remaining risks or work, and any required user input.
