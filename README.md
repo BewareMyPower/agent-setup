@@ -16,8 +16,8 @@ My personal global setup for coding agents, reused on every machine: shared inst
 Prerequisites: Node.js with `pi` installed (`npm i -g @earendil-works/pi-coding-agent`), and a terminal font that can draw the footer icons (see [Terminal icons](#terminal-icons)).
 
 ```sh
-git clone git@github.com:bewaremypower/development-skills.git
-cd development-skills
+git clone https://github.com/BewareMyPower/agent-setup.git
+cd agent-setup
 ./pi/setup.sh
 pi auth login deepseek
 ```
