@@ -70,6 +70,12 @@ for skill in "$repo"/.agents/skills/*/; do
 	link_path "$skill" "$agents_dir/skills/$(basename "$skill")"
 done
 
+# pi subagents read their own agent directory, not ~/.agents/agents.
+for agent in "$repo"/pi/agents/*.md; do
+	[[ -e $agent ]] || continue
+	link_path "$agent" "$agent_dir/agents/$(basename "$agent")"
+done
+
 # Installs the packages declared in settings.json, which a fresh agent directory has none of.
 pi update --extensions
 
