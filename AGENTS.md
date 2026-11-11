@@ -53,5 +53,6 @@ The following words should be avoided in Chinese content, you should replace the
 - 门禁
 - 谓词
 - 张力
+- 夹
 
 Besides, avoid figures of speech as much as possible. Using English for professional terms is acceptable.
