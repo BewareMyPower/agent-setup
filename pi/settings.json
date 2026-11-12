@@ -11,6 +11,7 @@
     "npm:pi-plugin-manager",
     "npm:pi-lsp",
     "npm:@pi-lab/input-history",
-    "npm:pi-subagents"
+    "npm:pi-subagents",
+    "npm:pi-vim-editor"
   ]
 }
