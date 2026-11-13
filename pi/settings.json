@@ -13,5 +13,6 @@
     "npm:@pi-lab/input-history",
     "npm:pi-subagents",
     "npm:pi-vim-editor"
-  ]
+  ],
+  "hideThinkingBlock": true
 }
