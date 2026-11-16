@@ -28,6 +28,15 @@ Rewriting L1 (a renamed helper, a dropped column, a changed DTO field) makes eve
 4. **Adapt deliberately.** When an upper layer must change to fit the new lower layer (drop a removed fallback, read an id as a string), commit that on that layer as its own small commit whose subject says what was adapted, and add one PR bullet so a reviewer knows why the commit exists. Never fold the adaptation into an unrelated commit, and never amend (global rules).
 5. Expect four to six pauses on a four-layer stack (changelog and README paragraphs conflict on every layer). That is normal; the desync rules above still apply throughout.
 
+## Resolving a file that every layer rewrites
+
+A changelog, runbook, or README section that each layer edits conflicts again on every replay, and the sides are not symmetrical: the upper side is the superset, the lower side is where wording fixes live.
+
+- Start from the **upper** side and re-apply the lower layer's wording fixes to it. Going the other way silently drops bullets the upper layers added.
+- Never choose a side by length. A shorter side can be the one whose whole bullet vanished; compare the count of bullets or sections with what the layer below has plus what this layer adds.
+- Gate the stage on a structural check of the file, not on a resolution script's exit code: no `<<<<<<<` anywhere, and the expected bullet and heading counts. Chain the check in front of the stage, e.g. `if grep -rq '^<<<<<<<' CHANGELOG.md; then exit 1; fi`, and read its output before continuing.
+- `git add … && gh stack rebase --continue` on one line hides a failed check between the two: a grep that matches nothing returns success, so the continue runs and commits the markers. Run the check, look at it, then continue.
+
 ## Validate and publish the cascade
 
 - **Pick packages by the diff, not `./...` on every tip.** Only packages the change touches, plus the top tip's full suite when CI is the gate. A full suite on every branch usually dominates the wall clock while adding no information: the lower-layer code is identical across tips.
@@ -52,6 +61,16 @@ Symptoms: `gh stack view` shows a broken chain, `merge-base` ancestry fails betw
 - `gh stack rebase --upstack` / `--downstack` limits the cascade to one direction from the current branch.
 - Other: `add`, `modify`, `submit`, `sync`, `checkout`, `unstack`, and `bottom`/`down`/`up`/`top`/`trunk` navigation.
 
+## Repairing a commit gs already finished
+
+Markers or a dropped bullet that are already committed need a local rewrite, and the recorded state has to be re-synced afterwards.
+
+1. `gh stack checkout <branch>`.
+2. `git rebase -i <the layer below>` and mark the offending commit `edit`.
+3. Fix the file, `git add`, `git commit --amend --no-edit`, `git rebase --continue`.
+4. `gh stack rebase --no-trunk`: it rewrites `.git/gh-stack` to the real SHAs. Skipping it leaves the snapshot stale for the next gs command.
+5. Check `gh stack view` and per-layer ancestry, then push.
+
 ## Stuck git-level rebase inside a gs pause
 
 If `git status` says "all conflicts fixed" but `git rebase --continue` errors `you have staged changes in your working tree`, the sequencer state desynced (e.g. a killed editor or a stale `.git/MERGE_RR.lock`). Check `.git/rebase-merge/done` for the attempted pick, then `git commit -C <original-sha>` to commit the staged resolution with the original message, then `gs rebase --continue` — not `git rebase --continue`, per the desync rule above.
@@ -63,4 +82,6 @@ If `git status` says "all conflicts fixed" but `git rebase --continue` errors `y
 - `git rerere` plus the recovery steps above mean no resolution work is truly lost — prefer repair over `reset --hard` to a remote ref.
 - Never pipe `go build`, `go vet`, or test output through `head`: the errors that matter are further down, and the command has to be re-run.
 - A stale `.git/MERGE_RR.lock` can block a plain `git commit` even with no rebase in progress. Confirm no git process is running, then delete the lock.
+- Untracked files in the worktree block `gs rebase` with `uncommitted changes in worktree`. Use `git stash push -u` and pop it after the cascade.
+- gs leaves HEAD on the branch the operation started from, not on the tip that was rewritten. Validate a layer in `git worktree add <dir> <branch>`, then remove the worktree.
 - After a commit or `--continue` fails, check `git log` and `git status` before retrying: a series is often partially applied, and re-running the whole staging step can misplace later changes.
