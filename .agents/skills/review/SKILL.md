@@ -11,7 +11,7 @@ Review the requested target against all six criteria below.
 
 Unless the assignment explicitly identifies the current agent as the context-isolated reviewer, act as the review coordinator:
 
-1. Spawn a fresh subagent with `fork_turns: "none"` so it does not inherit the parent conversation.
+1. Spawn a fresh subagent without the parent conversation. On Pi, enable the subagent tools if needed, then call `subagent({ agent: "reviewer", task: "...", options: { context: "fresh" } })`. On other runtimes, use the equivalent context isolation.
 2. Identify it explicitly as the context-isolated reviewer. Keep it read-only, tell it to read this skill, and instruct it not to delegate the review again. Require it to assess every equally weighted criterion and use the report format below.
 3. Pass only the original requirement or acceptance criteria, the repository path, and the review target such as the working tree, diff, branch, commit, or pull request. Do not pass the parent agent's reasoning, suspected defects, implementation rationale, or draft conclusions. For a follow-up pass, also supply prior findings per "Re-review After Fixes" below.
 

@@ -35,7 +35,7 @@ Not committed on purpose: `auth.json` (API keys and OAuth tokens), `trust.json` 
 
 ## Subagents
 
-Pi ships no subagent tool, so the `pi-subagents` package in `settings.json` provides one: a `subagent` tool that runs a child Pi session with its own context window, builtin `scout`, `researcher`, `worker`, `reviewer`, `oracle`, and `delegate` agents, parallel and chained runs, and background children. It is what the `review` skill means by an independent review — ask for it directly ("use reviewer to review this diff") and the child never sees the parent transcript.
+Pi ships no subagent tool, so the `pi-subagents` package in `settings.json` provides one: a `subagent` tool that runs a child Pi session with its own context window, builtin `scout`, `researcher`, `worker`, `reviewer`, `oracle`, and `delegate` agents, parallel and chained runs, and background children. The `review` skill requests `options: { context: "fresh" }` so the reviewer does not inherit the parent transcript, regardless of the configured default.
 
 Agent files are markdown with YAML frontmatter (`name`, `description`, `tools`, optional `model` and `thinking`) read from `~/.pi/agent/agents/**/*.md` in this setup, with project agents from `.pi/agents/**/*.md` behind project trust. `pi/agents/comment-sicko.md` is linked there by `setup.sh`; it is a Pi-format port of `.agents/agents/comment-sicko.md`, whose `mode: subagent` frontmatter belongs to another agent runtime, so the two files are kept in sync by hand.
 
