@@ -12,7 +12,8 @@
     "npm:pi-lsp",
     "npm:@pi-lab/input-history",
     "npm:pi-subagents",
-    "npm:pi-vim-editor"
+    "npm:pi-vim-editor",
+    "git:github.com/BewareMyPower/pi-skill-complete"
   ],
   "hideThinkingBlock": true
 }

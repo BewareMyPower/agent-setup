@@ -43,6 +43,14 @@ Agent files are markdown with YAML frontmatter (`name`, `description`, `tools`, 
 
 `pi-vim-editor` is installed as a global Pi package. The prompt starts in INSERT mode; press `Esc` to enter NORMAL mode, and use `i` or `a` to return to INSERT. It adds Vim-style motions and Visual selection to Pi's prompt editor; see the [plugin README](https://github.com/mavam/pi-vim-editor) for its full key reference and extension-composition notes. Restart Pi or run `/reload` after installing the package.
 
+## Inline slash completion
+
+`pi-skill-complete` is installed as a global Pi package from git. Stock Pi opens the slash-command and skill menu only when `/` is the first non-whitespace character of the first line; this extension opens the same menu for an inline `/` after whitespace or CJK punctuation, so `hello /aws-net` completes to `/skill:aws-networking ` without submitting. A `/` inside a word, a `//` run, a URL scheme, or after ASCII punctuation keeps the built-in file completion. On a machine not managed by `setup.sh`, install it with:
+
+```sh
+pi install git:github.com/BewareMyPower/pi-skill-complete
+```
+
 ## Reading the transcript
 
 `Ctrl+T` collapses or expands thinking blocks and saves the choice as `hideThinkingBlock`, and `thinkingPeek.lines` in `open-tui.json` keeps the last one or two lines of live reasoning visible while hidden.
